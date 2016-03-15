@@ -128,6 +128,7 @@ module AutoMigrations
             if !value.nil?
               value_in_db = fields_in_db[field].send(att)
               value_in_db = value_in_db.to_i if att == :default && new_type == :integer && value_in_db.class == String
+              value_in_db = value_in_db.to_f if att == :default && new_type == :float && value_in_db.class == String
               if att == :default && new_type == :boolean && value_in_db.class == String
                 value_in_db_to_i = value_in_db.to_i
                 value_in_db = false if value_in_db_to_i == 0

@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = "auto_migrations_rails4"
-  s.version = "1.0.0"
+  s.name = "auto_migrations"
+  s.version = "1.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["yzhang (originally by PJ Hyett)"]
-  s.date = "2013-08-10"
-  s.description = "Auto database migration for Rails 4."
+  s.date = "2016-03-15"
+  s.description = "Auto database migration."
   s.email = "zhangyuanyi@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -22,15 +22,15 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
-    "auto_migrations_rails4.gemspec",
+    "auto_migrations.gemspec",
     "init.rb",
-    "lib/auto_migrations_rails4.rb",
-    "lib/tasks/auto_migrations_rails4_tasks.rake",
-    "test/auto_migrations_rails4_test.rb"
+    "lib/auto_migrations.rb",
+    "lib/tasks/auto_migrations_tasks.rake",
+    "test/auto_migrations_test.rb"
   ]
-  s.homepage = "http://github.com/yzhang/auto_migrations_rails4"
+  s.homepage = "http://github.com/yzhang/auto_migrations"
   s.require_paths = ["lib"]
   s.rubygems_version = "2.0.6"
-  s.summary = "Auto database migration for Rails 4."
+  s.summary = "Auto database migration."
 end
 

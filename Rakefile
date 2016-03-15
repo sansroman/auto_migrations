@@ -5,11 +5,11 @@ require 'rdoc/task'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "auto_migrations_rails4"
-    gemspec.summary = "Auto database migration for Rails 4."
-    gemspec.description = "Auto database migration for Rails 4."
+    gemspec.name = "auto_migrations"
+    gemspec.summary = "Auto database migration."
+    gemspec.description = "Auto database migration."
     gemspec.email = "zhangyuanyi@gmail.com"
-    gemspec.homepage = "http://github.com/yzhang/auto_migrations_rails4"
+    gemspec.homepage = "http://github.com/yzhang/auto_migrations"
     gemspec.authors = ["yzhang (originally by PJ Hyett)"]
   end
   Jeweler::GemcutterTasks.new
