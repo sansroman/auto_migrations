@@ -31,7 +31,7 @@ module AutoMigrations
               "    initialize_schema_migrations_table\n\n" if with_reset
     schema += schema_in
     schema << "\n  def self.down\n"
-    schema << (ActiveRecord::Base.connection.tables - %w(schema_info schema_migrations)).map do |table|
+    schema << ((ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables) - %w(schema_info schema_migrations)).map do |table|
                 "    drop_table :#{table}\n"
               end.join
     schema << "  end\nend\n"
@@ -45,7 +45,8 @@ module AutoMigrations
     class << base
       cattr_accessor :tables_in_schema, :indexes_in_schema
       self.tables_in_schema, self.indexes_in_schema = [], []
-      alias_method_chain :method_missing, :auto_migration
+      alias_method :method_missing_without_auto_migration, :method_missing
+      alias_method :method_missing, :method_missing_with_auto_migration
     end
   end
 
@@ -69,7 +70,7 @@ module AutoMigrations
       (self.tables_in_schema ||= []) << table_name
 
       # Table doesn't exist, create it
-      unless ActiveRecord::Base.connection.tables.include?(table_name)
+      unless (ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables).include?(table_name)
         return method_missing_without_auto_migration(method, *[table_name, options], &block)
       end
 
@@ -164,7 +165,7 @@ module AutoMigrations
     end
 
     def drop_unused_tables
-      (ActiveRecord::Base.connection.tables - tables_in_schema - %w(schema_info schema_migrations)).each do |table|
+      (ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables - tables_in_schema - %w(schema_info schema_migrations)).each do |table|
         drop_table table
       end
     end
@@ -179,7 +180,7 @@ module AutoMigrations
     end
 
     def update_schema_version(version)
-      if ActiveRecord::Base.connection.tables.include?("schema_migrations")
+      if (ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables).include?("schema_migrations")
         ActiveRecord::Base.connection.update("INSERT INTO schema_migrations VALUES ('#{version}')")
       end
       schema_file = File.join(Rails.root, "db", "schema.rb")
