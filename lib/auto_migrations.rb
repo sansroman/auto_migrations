@@ -165,7 +165,7 @@ module AutoMigrations
     end
 
     def drop_unused_tables
-      (ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables - tables_in_schema - %w(schema_info schema_migrations)).each do |table|
+      ((ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Base.connection.data_sources : ActiveRecord::Base.connection.tables) - tables_in_schema - %w(schema_info schema_migrations)).each do |table|
         drop_table table
       end
     end
