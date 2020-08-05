@@ -191,7 +191,7 @@ module AutoMigrations
 
     private
     def create_table_definition(name, temporary, options)
-      ActiveRecord::ConnectionAdapters::TableDefinition.new(ActiveRecord::Base.connection, name, {temporary: temporary, options: options} )
+      ActiveRecord::ConnectionAdapters::TableDefinition.new(ActiveRecord::Base.connection, name, temporary: temporary, options: options)
     end
   end
 end
